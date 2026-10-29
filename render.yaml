@@ -1,0 +1,21 @@
+# Déploiement « un clic » sur Render (https://render.com) depuis GitHub : New → Blueprint → choisir ce dépôt.
+# PROTOTYPE DE DÉMONSTRATION : données fictives, disque éphémère (réinitialisé à chaque redémarrage).
+services:
+  - type: web
+    name: maronet360-demo
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: node server/demo.js && node server/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.13.0
+      - key: MARONET_TRUST_PROXY
+        value: "1"
+      - key: MARONET_HTTPS
+        value: "1"
+      - key: MARONET_DATA
+        value: /tmp/maronet-data
+      - key: TZ
+        value: Africa/Casablanca

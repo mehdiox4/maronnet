@@ -1,0 +1,15 @@
+# docker compose up -d      → http://localhost:3000
+# Les données (base SQLite, fichiers, sauvegardes) sont dans le volume « maronet_data ».
+# Derrière un proxy HTTPS (Caddy, Nginx…), décommentez MARONET_TRUST_PROXY et MARONET_HTTPS.
+services:
+  maronet:
+    build: .
+    restart: unless-stopped
+    ports: ["3000:3000"]
+    volumes: ["maronet_data:/data"]
+    environment:
+      TZ: Africa/Casablanca
+      # MARONET_TRUST_PROXY: "1"
+      # MARONET_HTTPS: "1"
+volumes:
+  maronet_data:
